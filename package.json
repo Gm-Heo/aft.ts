@@ -1,0 +1,25 @@
+{
+  "name": "afts",
+  "version": "0.0.10",
+  "description": "aft script module",
+  "homepage": "https://vloom.dev",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bugs": {
+    "email": "rodeck826@vloom.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Gm-Heo/aft.js.git"
+  },
+  "keywords": [],
+  "author": "G.M.HEO ",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "ts-loader": "^9.4.4",
+    "typescript": "^5.1.6"
+  }
+}
