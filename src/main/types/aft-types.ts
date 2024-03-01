@@ -25,3 +25,19 @@ export type ApiReturnType<TResponse> = {
     message? : string,
     header ? :any
 }
+
+/**
+ * 코드타입
+ */
+export interface CodeType{
+    code : string,
+    value:string,
+}
+export interface CodeGroupType{
+    name : string,
+    list : CodeType[]
+}
+
+export interface CodePack{
+    codes : CodeGroupType[]
+}

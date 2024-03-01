@@ -1,7 +1,7 @@
 import {aftRouter} from './plugin/aft-router';
 import {appendDom, AppendDomType, loadDom} from "./plugin/aft-dom-loader";
 import {formInit, listener} from "./plugin/aft-dom-event";
-import {RouteType} from "./types/aft-types";
+import {CodePack, RouteType} from "./types/aft-types";
 import {AftPot} from "./plugin/aft-navigator";
 
 
@@ -33,6 +33,7 @@ export class aftBuilder{
     private _container : HTMLElement;
     private _interceptorHandler : Function = ()=>{};
     private _locationHandler : Function = ()=>{};
+    private _codePack :CodePack;
     private _error : {[key:string]:string}
 
     _apiKey : string;
@@ -87,6 +88,15 @@ export class aftBuilder{
      */
     public setPageEvent(evt:Function) : aftBuilder{
         this._pageEvent = evt;
+        return this;
+    }
+
+    /**
+     * 코드팩 설정
+     * @param codePack
+     */
+    public codePack(codePack : CodePack) : aftBuilder{
+        this._codePack = codePack;
         return this;
     }
 
@@ -318,7 +328,8 @@ export class aftBuilder{
                                     root._form = formInit(
                                         root._form,
                                         root._container,
-                                        rtnObj.binder
+                                        rtnObj.binder,
+                                        root._codePack
                                     );
                                     //set listener event;
                                     listener(
@@ -375,7 +386,6 @@ export class aftBuilder{
      * @param {HTMLElement} body
      */
     patchEvent(body:HTMLElement){
-        ;
         if(window._eventQue){
             console.log('has click queue')
             Object.keys(window._eventQue).forEach((key:string)=>{

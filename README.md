@@ -1,9 +1,9 @@
-# aft.ts
+# afts
 
 ## Installation
 
 ```sh
-npm install aft.ts --save-dev
+npm install afts --save-dev
 ```
 
 ## Programmatic usage

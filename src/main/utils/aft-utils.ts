@@ -80,8 +80,8 @@ export const NumberUtils={
      * @param n
      * @param r
      */
-    ifNaN (n:number,r:number){
-        n = Number.isNaN(n)?r:n;
+    ifNaN (n:number,r:number) :number{
+        return Number.isNaN(n)?r:n;
     }
 }
 /**
@@ -183,7 +183,7 @@ export const html= (...props:any[]): HTMLElement => {
     if (Object.keys(_inputQue).length > 0) {
         window['_inputQue'] = _inputQue;
     }
-    return MakeFor('div').html(_html).element.firstChild as HTMLElement;
+    return MakeFor('div').html(_html).element.children[0] as HTMLElement;
 }
 /**
  * 돔 간편생성

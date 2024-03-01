@@ -1,6 +1,7 @@
 import {aftBuilder} from "../aft-builder";
 import {appendDom, AppendDomType, loadDom} from "../plugin/aft-dom-loader";
 import {formInit, listener} from "../plugin/aft-dom-event";
+import {CodePack} from "../types/aft-types";
 
 export interface AftTabBodyProps<T>{
     param?:T
@@ -14,6 +15,7 @@ export interface AftTabBodyReturns{
     id : string,
     path : string,
     binder? : {[key:string]:any},
+    codePack?:CodePack,
     onload : Function,
     event? : {},
     listener?:{}
@@ -51,7 +53,8 @@ export class AftTabBody<T>{
                 this.form = formInit(
                     this.form,
                     this.props.body,
-                    tab.binder
+                    tab.binder,
+                    tab.codePack
                 );
                 listener(
                     {

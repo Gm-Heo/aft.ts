@@ -1,0 +1,13 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "commonjs",
+    "baseUrl": "src",
+    "declaration": true,
+    "outDir": "./dist",
+    "strict": true,
+    "strictPropertyInitialization":false, /** disable to check constructor **/
+    "moduleResolution": "node"
+  }
+}

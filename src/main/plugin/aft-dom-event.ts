@@ -2,10 +2,13 @@
  * aft dom init event
  * @param dom
  */
+import {CodePack} from "../types/aft-types";
+
 export const formInit : Function = (
     form :{[key:string]:any},
     container : HTMLElement,
-    data? :{[key:string]:any}
+    data? :{[key:string]:any},
+    codePack?:CodePack
 ):{[key:string]:any}=>{
     form = {};
     container.querySelectorAll('[aft-id]')
@@ -31,6 +34,7 @@ export const formInit : Function = (
                     oldValue : '',
                     isInput : true
                 };
+                //set code pack
                 //set old value
                 if(obj.nodeName === 'INPUT'){
                     let type = (obj as HTMLInputElement).type;
@@ -41,6 +45,8 @@ export const formInit : Function = (
                     if(data && data[id] ){
                         if( type ==='text'){
                             (obj as HTMLInputElement).value=data[id]||'';
+                            //if it has code attribute set to value code value
+                            _elementCodeEvent(obj as HTMLInputElement,(data[id]||''),codePack);
                         }else if(type ==='checkbox' && (data[id]==='Y' || data[id] ==='true')){
                             (obj as HTMLInputElement).checked = true;
                         }else if(type ==='checkbox' && Array.isArray(data[id]) && data[id].length>0){
@@ -57,6 +63,7 @@ export const formInit : Function = (
                         });
                     }
                     _elementBindingEvent(<HTMLInputElement>obj);
+
                 }
             }
 
@@ -83,7 +90,29 @@ export const formInit : Function = (
     };
     return form;
 }
-
+/**
+ * 코드값으로 대체
+ * @param inp
+ * @param data
+ * @param codePack
+ */
+const _elementCodeEvent = (inp : HTMLInputElement,data:any,codePack?:CodePack)=>{
+    if(codePack && inp.getAttribute('aft-code')){
+        let code = inp.getAttribute('aft-code')||'';
+        codePack.codes.filter(i=>i.name == code).forEach(targets=>{
+            targets.list.forEach(item=>{
+                if(item.code === data){
+                    inp.value = item.value;
+                }
+            })
+        })
+    }
+}
+/**
+ * 엘리먼트 바인딩 이벤트
+ * @param obj
+ * @param codePack
+ */
 const _elementBindingEvent = (obj: HTMLInputElement)=>{
     if(obj.type==='tel'){
         obj.addEventListener('keydown',()=>{
@@ -117,6 +146,7 @@ const _elementBindingEvent = (obj: HTMLInputElement)=>{
             obj.value=String(Number(obj.value) || 0)
         });
     }
+
     if(obj.type==='number'){
         obj.value = obj.value||'0';
         obj.addEventListener('keydown',()=>{
