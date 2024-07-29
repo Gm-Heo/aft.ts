@@ -1,9 +1,12 @@
 /**
  * 라우트 타입
  */
+import {AccessPageInfo} from "../plugin/aft-router";
+
 export type RouteType = {
     path : string,
-    event : Function
+    event : Function,
+    pageInfo ?:AccessPageInfo
 }
 
 /**
@@ -12,6 +15,7 @@ export type RouteType = {
 export type RouteReturnType= {
     path : string,
     event : {[key:string]:Function},
+    name?:string,
     listener?:{[key:string]:Function}|undefined,
     onload : Function,
     binder?:{[key:string]:any}

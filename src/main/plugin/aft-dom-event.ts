@@ -166,6 +166,18 @@ export const listener = (
     container : HTMLElement
 )=>{
     {//link event
+        container.querySelectorAll('[aft-focusin]')
+            .forEach((node)=>{
+                const evt = node.getAttribute('aft-focusin')||'';
+                if(typeof returnEvent.listener !=='undefined' && typeof returnEvent.listener[evt] ==='function')
+                    node.addEventListener('focusin',function(e){returnEvent.listener[evt](node,e)});
+            });
+        container.querySelectorAll('[aft-focusout]')
+            .forEach((node)=>{
+                const evt = node.getAttribute('aft-focusout')||'';
+                if(typeof returnEvent.listener !=='undefined' && typeof returnEvent.listener[evt] ==='function')
+                    node.addEventListener('focusout',function(e){returnEvent.listener[evt](node,e)});
+            });
         container.querySelectorAll('[aft-listener]')
             .forEach((node)=>{
                 const evt = node.getAttribute('aft-listener')||'';

@@ -47,6 +47,7 @@ export const appendDom : Function = (child : HTMLElement,parent: HTMLElement) : 
             ele.setAttribute('custom','custom');
             document.head.appendChild(ele);
             ele.addEventListener('load',()=>{loadedModuleCnt++;})
+            ele.addEventListener('error',()=>{loadedModuleCnt++;});
         });
         //style sheet
         child.querySelectorAll('style').forEach((ele)=>{
@@ -60,6 +61,7 @@ export const appendDom : Function = (child : HTMLElement,parent: HTMLElement) : 
                 _script.type='text/javascript';
                 _script.setAttribute('custom','custom');
                 _script.addEventListener('load',()=>{loadedModuleCnt++;})
+                _script.addEventListener('error',()=>{loadedModuleCnt++;});
                 document.head.appendChild(_script);
             }else{
                 _script.type='text/javascript';

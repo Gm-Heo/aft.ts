@@ -1,6 +1,6 @@
 {
   "name": "afts",
-  "version": "0.0.20",
+  "version": "0.0.35",
   "description": "aft script module",
   "homepage": "https://vloom.dev",
   "main": "dist/index.js",

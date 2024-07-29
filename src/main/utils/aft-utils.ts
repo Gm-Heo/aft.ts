@@ -183,7 +183,17 @@ export const html= (...props:any[]): HTMLElement => {
     if (Object.keys(_inputQue).length > 0) {
         window['_inputQue'] = _inputQue;
     }
-    return MakeFor('div').html(_html).element.children[0] as HTMLElement;
+    let node = MakeFor('div').html(_html).element.children[0] as HTMLElement;
+    node.querySelectorAll('[aft-pattern]').forEach(item=>{
+        let pattern = item.getAttribute('aft-pattern')||'';
+        try{
+            InputBox.pattern(item as HTMLInputElement,pattern)
+        }catch (e){
+            console.log('cannot execute pattern event')
+        }
+
+    })
+    return node;
 }
 /**
  * 돔 간편생성
@@ -263,9 +273,6 @@ export const htmls= (...props:any): HTMLCollection => {
         window['_inputQue'] = _inputQue;
     }
     let parent = MakeFor('div').html(_html).element;
-    for(let i=0;i<parent.children.length;i++){
-        parent.children
-    }
 
     return parent.children;
 }
@@ -285,6 +292,10 @@ export const Validator  = {
     },
     hasNullData : (...values :any[]) : boolean=>{
         return (values.filter(Validator.isNull).length>0)
+    },
+    tel : (text : string=''):boolean=>{
+        let regex = /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$/
+        return regex.test(text);
     }
 }
 /**

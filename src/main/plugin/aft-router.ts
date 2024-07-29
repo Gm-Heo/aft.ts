@@ -4,8 +4,15 @@
 import {RouteType} from "../types/aft-types";
 import {Route} from "../interface/aft-interfaces";
 
+export interface AccessPageInfo{
+    name?:string,
+    code? :string,
+    hasParent? : boolean,
+    parentLink?: string
+}
 export class aftRouter{
     _list : {[key:string]:Function};
+    _pageInfo : {[key:string]:AccessPageInfo};
     _routes : Route[];
     _pathVar : {[key:string]:any};
     _jsonList : {[key:string]:any};
@@ -14,11 +21,12 @@ export class aftRouter{
         this._list = {};
         this._pathVar = {};
         this._jsonList = {};
+        this._pageInfo = {};
     }
     public addAll(...routes : Route[]){
         if(Array.isArray(routes) && routes.length>0){
             routes.forEach(r=>{
-                r.call().forEach(rt=>this.get(rt.path,rt.event));
+                r.call().forEach((rt : RouteType)=>this.get(rt.path,rt.event,rt.pageInfo));
             })
         }
     }
@@ -38,7 +46,7 @@ export class aftRouter{
      * @param path
      * @param event
      */
-    public get(path : string,event : Function) : aftRouter{
+    public get(path : string,event : Function,pageInfo?:AccessPageInfo) : aftRouter{
         let pathVar : any = {};
         let idx=0;
         if(Array.isArray(path)){
@@ -58,6 +66,11 @@ export class aftRouter{
                     }).join("/");
             }).forEach((path:string)=>{
                 this._list[path] = event;
+                if(pageInfo){
+                    console.log(pageInfo);
+                    console.log(this._pageInfo);
+                    this._pageInfo[path] = (pageInfo||{});
+                }
                 this._pathVar[path] = pathVar;
                 // this._list[path].pathVar = pathVar;
             });
@@ -76,6 +89,9 @@ export class aftRouter{
                     return path;
                 }).join("/");
             this._list[path] = event;
+            if(pageInfo){
+                this._pageInfo[path] = pageInfo!;
+            }
             // this._list[path].pathVar = pathVar;
             this._pathVar[path] = pathVar
         }
